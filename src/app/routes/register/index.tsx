@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../features/auth/hooks/useAuth";
-
 const RegisterPage = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("+998 ");
@@ -9,7 +8,6 @@ const RegisterPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const { register, isLoading, error, isAuthenticated } = useAuth();
   const navigate = useNavigate();
-
   const handleRegister = () => {
     register(name, phone, password);
   };
@@ -22,7 +20,6 @@ const RegisterPage = () => {
 
   return (
     <div className="relative flex min-h-screen flex-col bg-white font-display">
-      {/* Header */}
       <div className="flex items-center p-4 pb-2 justify-between">
         <button
           onClick={() => navigate(-1)}
@@ -37,9 +34,7 @@ const RegisterPage = () => {
         </h2>
       </div>
 
-      {/* Kontent */}
       <div className="px-6 pt-8 pb-4">
-        {/* Logo va sarlavha */}
         <div className="mb-6">
           <div className="h-12 w-12 bg-primary rounded-xl flex items-center justify-center mb-6">
             <span
@@ -57,16 +52,13 @@ const RegisterPage = () => {
           </p>
         </div>
 
-        {/* Xato xabari */}
         {error && (
           <div className="w-full mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
             <p className="text-red-600 text-sm text-center">{error}</p>
           </div>
         )}
 
-        {/* Forma */}
         <div className="space-y-5">
-          {/* Ism */}
           <div className="flex flex-col gap-2">
             <span className="text-slate-700 text-sm font-semibold ml-1">
               Ism-sharif
@@ -85,7 +77,6 @@ const RegisterPage = () => {
             </div>
           </div>
 
-          {/* Telefon */}
           <div className="flex flex-col gap-2">
             <span className="text-slate-700 text-sm font-semibold ml-1">
               Telefon raqami
@@ -104,7 +95,6 @@ const RegisterPage = () => {
             </div>
           </div>
 
-          {/* Parol */}
           <div className="flex flex-col gap-2">
             <span className="text-slate-700 text-sm font-semibold ml-1">
               Parol
@@ -133,7 +123,6 @@ const RegisterPage = () => {
           </div>
         </div>
 
-        {/* Tugmalar */}
         <div className="mt-10 space-y-4">
           <button
             onClick={handleRegister}
@@ -155,7 +144,6 @@ const RegisterPage = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <div className="mt-auto p-6 text-center">
         <p className="text-xs text-slate-400 leading-relaxed">
           Ro'yxatdan o'tish orqali siz bizning{" "}

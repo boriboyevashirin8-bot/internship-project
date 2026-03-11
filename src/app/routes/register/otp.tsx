@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const CROPS = ["Paxta", "Bug'doy", "Uzum", "Meva", "Sabzavot"];
-
 const REGIONS = [
   "Toshkent viloyati",
   "Farg'ona viloyati",
@@ -18,7 +17,6 @@ const REGIONS = [
   "Xorazm viloyati",
   "Qoraqalpog'iston",
 ];
-
 const OtpPage = () => {
   const [pinfl, setPinfl] = useState("");
   const [region, setRegion] = useState("");
@@ -41,7 +39,6 @@ const OtpPage = () => {
 
   return (
     <div className="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden font-display bg-background-light">
-      {/* Header */}
       <div className="flex items-center p-4 pb-2 justify-between max-w-2xl mx-auto w-full">
         <button
           onClick={() => navigate(-1)}
@@ -56,7 +53,6 @@ const OtpPage = () => {
         </h2>
       </div>
 
-      {/* Progress */}
       <div className="flex flex-col gap-3 p-4 max-w-2xl mx-auto w-full">
         <div className="flex gap-6 justify-between items-center">
           <p className="text-slate-700 text-base font-medium leading-normal">
@@ -72,9 +68,7 @@ const OtpPage = () => {
         </div>
       </div>
 
-      {/* Forma */}
       <div className="flex flex-col p-4 max-w-2xl mx-auto w-full space-y-6">
-        {/* Sarlavha */}
         <div className="pt-2">
           <h3 className="text-slate-900 tracking-tight text-2xl font-bold leading-tight">
             Xo'jalik ma'lumotlari
@@ -84,7 +78,6 @@ const OtpPage = () => {
           </p>
         </div>
 
-        {/* JSHSHIR */}
         <div className="flex flex-col gap-2">
           <label className="text-slate-800 text-sm font-semibold">
             JSHSHIR (PINFL) yoki ID
@@ -103,9 +96,7 @@ const OtpPage = () => {
           </div>
         </div>
 
-        {/* Viloyat va Tuman */}
         <div className="grid grid-cols-1 gap-4">
-          {/* Viloyat */}
           <div className="flex flex-col gap-2">
             <label className="text-slate-800 text-sm font-semibold">
               Viloyat
@@ -129,7 +120,6 @@ const OtpPage = () => {
             </div>
           </div>
 
-          {/* Tuman */}
           <div className="flex flex-col gap-2">
             <label className="text-slate-800 text-sm font-semibold">
               Tuman / Shahar
@@ -151,7 +141,6 @@ const OtpPage = () => {
           </div>
         </div>
 
-        {/* Asosiy ekinlar */}
         <div className="flex flex-col gap-3">
           <label className="text-slate-800 text-sm font-semibold">
             Asosiy ekinlar
@@ -186,7 +175,6 @@ const OtpPage = () => {
           </div>
         </div>
 
-        {/* Ekin maydoni */}
         <div className="flex flex-col gap-2">
           <label className="text-slate-800 text-sm font-semibold">
             Ekin maydoni (Gektar)
@@ -205,7 +193,6 @@ const OtpPage = () => {
           </div>
         </div>
 
-        {/* Tugma */}
         <div className="pt-8 pb-10">
           <button
             onClick={handleSubmit}
@@ -217,7 +204,6 @@ const OtpPage = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <div className="mt-auto p-6 text-center">
         <p className="text-slate-400 text-xs">
           AgroSmart Uzbekistan © 2024. Barcha huquqlar himoyalangan.

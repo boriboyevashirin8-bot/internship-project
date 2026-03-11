@@ -13,7 +13,6 @@ const LoginPage = () => {
     login(phone, password);
   };
 
-  // Login muvaffaqiyatli bo'lsa dashboard ga o'tish
   useEffect(() => {
     if (isAuthenticated) {
       navigate("/dashboard");
@@ -22,11 +21,9 @@ const LoginPage = () => {
 
   return (
     <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden font-display bg-background-light">
-      {/* Orqa fon dekoratsiya */}
       <div className="fixed -bottom-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
       <div className="fixed -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
 
-      {/* Header */}
       <div className="flex items-center p-4 pb-2 justify-between">
         <button
           onClick={() => navigate(-1)}
@@ -39,9 +36,7 @@ const LoginPage = () => {
         </h2>
       </div>
 
-      {/* Asosiy kontent */}
       <div className="flex flex-col items-center justify-center px-4 pt-10 pb-12 max-w-[480px] mx-auto w-full">
-        {/* Icon */}
         <div className="mb-8 p-6 bg-primary/10 rounded-full">
           <span
             className="material-symbols-outlined text-primary"
@@ -58,16 +53,13 @@ const LoginPage = () => {
           Tizimga kirish uchun ma'lumotlaringizni kiriting
         </p>
 
-        {/* Xato xabari */}
         {error && (
           <div className="w-full mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
             <p className="text-red-600 text-sm text-center">{error}</p>
           </div>
         )}
 
-        {/* Forma */}
         <div className="w-full space-y-5">
-          {/* Telefon */}
           <div className="flex flex-col w-full">
             <label className="text-slate-900 text-base font-semibold leading-normal pb-2 px-1">
               Telefon raqami
@@ -86,7 +78,6 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Parol */}
           <div className="flex flex-col w-full">
             <label className="text-slate-900 text-base font-semibold leading-normal pb-2 px-1">
               Parol
@@ -114,14 +105,12 @@ const LoginPage = () => {
             </div>
           </div>
 
-          {/* Parolni unutdingizmi */}
           <div className="flex justify-end px-1">
             <button className="text-primary text-sm font-semibold hover:underline">
               Parolni unutdingizmi?
             </button>
           </div>
 
-          {/* Tugmalar */}
           <div className="pt-4 space-y-4">
             <button
               onClick={handleLogin}
@@ -131,7 +120,6 @@ const LoginPage = () => {
               {isLoading ? "Yuklanmoqda..." : "Kirish"}
             </button>
 
-            {/* Divider */}
             <div className="flex items-center gap-4 py-2">
               <div className="h-px bg-slate-300 flex-1"></div>
               <span className="text-slate-500 text-sm">yoki</span>
@@ -148,7 +136,6 @@ const LoginPage = () => {
         </div>
       </div>
 
-      {/* Footer */}
       <div className="mt-auto p-8 text-center">
         <p className="text-slate-500 text-sm">
           © 2024 AgroSmart Uzbekistan. Barcha huquqlar himoyalangan.

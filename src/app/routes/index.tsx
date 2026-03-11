@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 const SplashScreen = () => {
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState<"green" | "white">("green");
   const navigate = useNavigate();
-
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
@@ -26,7 +24,6 @@ const SplashScreen = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden">
-      {/* Splash 1 — Yashil */}
       <div
         className={`
           absolute inset-0 flex flex-col items-center justify-between
@@ -35,14 +32,12 @@ const SplashScreen = () => {
           ${phase === "green" ? "opacity-100 z-10" : "opacity-0 z-0"}
         `}
       >
-        {/* Orqa fon */}
         <div className="absolute inset-0 pointer-events-none">
           <div className="absolute -top-20 -left-20 w-64 h-64 bg-second-green rounded-full"></div>
           <div className="absolute top-1/2 -right-32 w-96 h-96 bg-second-green rounded-full"></div>
           <div className="absolute bottom-10 left-10 w-32 h-32 border-4 opacity-10 border-white rounded-xl rotate-45"></div>
         </div>
 
-        {/* Logo */}
         <div className="flex flex-1 flex-col items-center justify-center gap-8 z-10">
           <div className="relative flex items-center justify-center w-48 h-48 bg-white/20 backdrop-blur-md rounded-full border border-white/30 shadow-2xl overflow-hidden">
             <div
@@ -68,7 +63,6 @@ const SplashScreen = () => {
           </div>
         </div>
 
-        {/* Progress bar */}
         <div className="w-full max-w-xs flex flex-col items-center gap-6 z-10 mb-8">
           <div className="w-full space-y-3">
             <div className="flex justify-between items-center text-white/80 text-sm font-medium">
@@ -88,7 +82,6 @@ const SplashScreen = () => {
         </div>
       </div>
 
-      {/* Splash 2 — Oq */}
       <div
         className={`
           absolute inset-0 flex flex-col
@@ -97,7 +90,6 @@ const SplashScreen = () => {
           ${phase === "white" ? "opacity-100 z-10" : "opacity-0 z-0"}
         `}
       >
-        {/* Til tanlash */}
         <div className="flex items-center justify-end p-6 pt-12">
           <div className="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 border border-primary/20">
             <span className="material-symbols-outlined text-primary text-sm">
@@ -109,7 +101,6 @@ const SplashScreen = () => {
           </div>
         </div>
 
-        {/* Logo */}
         <div className="flex flex-1 flex-col items-center justify-center px-8">
           <div className="relative mb-8 flex h-48 w-48 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-primary/5">
             <div className="absolute inset-0 rounded-full opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary via-transparent to-transparent"></div>
@@ -132,7 +123,6 @@ const SplashScreen = () => {
           </div>
         </div>
 
-        {/* Progress bar */}
         <div className="flex flex-col gap-6 p-8 pb-16">
           <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
@@ -158,7 +148,6 @@ const SplashScreen = () => {
           </div>
         </div>
 
-        {/* Orqa fon */}
         <div className="absolute inset-0 -z-10 opacity-5 pointer-events-none">
           <div
             className="h-full w-full bg-center bg-no-repeat bg-cover"

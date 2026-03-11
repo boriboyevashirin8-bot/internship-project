@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const slides = [
@@ -14,22 +14,24 @@ const slides = [
     title: "Dalalaringizni kuzating",
     description: "Sun'iy yo'ldosh orqali real vaqtda monitoring.",
     image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAc1q0Q0rktMPczNaA8L7bVb_VQXAnmODUUhKe7w1pQrc-o59qfaTCOLv88VGUdbUzgVNsbTdqL05dKXlepD2rtxYTj62tu2kjTTBiT3gY6yXk9svW-PPpFTCZqmL7n10dIELV1zorN0AAivxCEJTWqGc3Ql3Y6x3KdlEIKLxP_1sCIyc1gnQqvLF7P66914frg24hPlF5AvOhxbAYegGwDVsnyj-BZw2-TU9PIzuOF6CVT2SKkFzQavZ4KDWxm-_5GBS6ioS2v2qh-",
+      "https://images.unsplash.com/photo-1625246333195-78d9c38ad449?w=800&auto=format&fit=crop",
   },
   {
     id: 3,
     title: "AI bilan kasallik aniqlang",
     description: "Rasm yuklang — kasallikni darhol aniqlang.",
     image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAc1q0Q0rktMPczNaA8L7bVb_VQXAnmODUUhKe7w1pQrc-o59qfaTCOLv88VGUdbUzgVNsbTdqL05dKXlepD2rtxYTj62tu2kjTTBiT3gY6yXk9svW-PPpFTCZqmL7n10dIELV1zorN0AAivxCEJTWqGc3Ql3Y6x3KdlEIKLxP_1sCIyc1gnQqvLF7P66914frg24hPlF5AvOhxbAYegGwDVsnyj-BZw2-TU9PIzuOF6CVT2SKkFzQavZ4KDWxm-_5GBS6ioS2v2qh-",
+      "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&auto=format&fit=crop",
   },
 ];
 
 const OnboardingPage = () => {
   const [current, setCurrent] = useState(0);
+  const [autoPlay, setAutoPlay] = useState(true);
   const navigate = useNavigate();
 
   const handleNext = () => {
+    setAutoPlay(false);
     if (current < slides.length - 1) {
       setCurrent(current + 1);
     } else {
@@ -41,9 +43,23 @@ const OnboardingPage = () => {
     navigate("/login");
   };
 
+  useEffect(() => {
+    if (!autoPlay) return;
+
+    const timer = setInterval(() => {
+      setCurrent((prev) => {
+        if (prev >= slides.length - 1) {
+          return 0;
+        }
+        return prev + 1;
+      });
+    }, 3000);
+
+    return () => clearInterval(timer);
+  }, [autoPlay]);
+
   return (
     <div className="relative flex h-screen w-full flex-col bg-background-light overflow-hidden font-display">
-      {/* Header */}
       <div className="flex items-center p-4 justify-between">
         <span className="material-symbols-outlined text-slate-900">info</span>
         <h2 className="text-slate-900 text-lg font-bold leading-tight tracking-tight flex-1 text-center">
@@ -57,9 +73,7 @@ const OnboardingPage = () => {
         </button>
       </div>
 
-      {/* Asosiy kontent */}
       <div className="flex-1 flex flex-col justify-center px-4">
-        {/* Rasm */}
         <div
           className="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden bg-primary/10 rounded-xl min-h-[400px] transition-all duration-500"
           style={{
@@ -67,7 +81,6 @@ const OnboardingPage = () => {
           }}
         ></div>
 
-        {/* Matn */}
         <div className="mt-8 space-y-3">
           <h2 className="text-slate-900 tracking-tight text-3xl font-bold leading-tight text-center px-2">
             {slides[current].title}
@@ -77,7 +90,6 @@ const OnboardingPage = () => {
           </p>
         </div>
 
-        {/* Dots */}
         <div className="flex w-full flex-row items-center justify-center gap-2 mt-8">
           {slides.map((_, index) => (
             <div
@@ -91,7 +103,6 @@ const OnboardingPage = () => {
         </div>
       </div>
 
-      {/* Tugma */}
       <div className="p-6">
         <button
           onClick={handleNext}
@@ -101,7 +112,6 @@ const OnboardingPage = () => {
         </button>
       </div>
 
-      {/* Bottom indicator */}
       <div className="absolute bottom-1 left-1/2 -translate-x-1/2 h-1.5 w-32 bg-slate-200 rounded-full opacity-50"></div>
     </div>
   );
