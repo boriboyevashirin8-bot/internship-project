@@ -8,6 +8,7 @@ export interface User {
 export interface AuthState {
   user: User | null;
   isAuthenticated: boolean;
+  isRegistering: boolean;
   isLoading: boolean;
   error: string | null;
 }

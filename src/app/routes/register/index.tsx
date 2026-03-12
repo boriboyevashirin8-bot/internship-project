@@ -1,22 +1,8 @@
-import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../../features/auth/hooks/useAuth";
-const RegisterPage = () => {
-  const [name, setName] = useState("");
-  const [phone, setPhone] = useState("+998 ");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
-  const { register, isLoading, error, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-  const handleRegister = () => {
-    register(name, phone, password);
-  };
+import RegisterForm from "../../../features/auth/components/RegisterForm";
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/register/otp");
-    }
-  }, [isAuthenticated]);
+const RegisterPage = () => {
+  const navigate = useNavigate();
 
   return (
     <div className="relative flex min-h-screen flex-col bg-white font-display">
@@ -52,96 +38,7 @@ const RegisterPage = () => {
           </p>
         </div>
 
-        {error && (
-          <div className="w-full mb-4 p-3 bg-red-50 border border-red-200 rounded-xl">
-            <p className="text-red-600 text-sm text-center">{error}</p>
-          </div>
-        )}
-
-        <div className="space-y-5">
-          <div className="flex flex-col gap-2">
-            <span className="text-slate-700 text-sm font-semibold ml-1">
-              Ism-sharif
-            </span>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                person
-              </span>
-              <input
-                type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                placeholder="Ismingizni kiriting"
-                className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-slate-50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-base outline-none"
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <span className="text-slate-700 text-sm font-semibold ml-1">
-              Telefon raqami
-            </span>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                phone
-              </span>
-              <input
-                type="tel"
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                placeholder="+998 00 000 00 00"
-                className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-slate-50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-base outline-none"
-              />
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <span className="text-slate-700 text-sm font-semibold ml-1">
-              Parol
-            </span>
-            <div className="relative">
-              <span className="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-                lock
-              </span>
-              <input
-                type={showPassword ? "text" : "password"}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Kamida 8 ta belgi"
-                className="w-full h-14 pl-12 pr-12 rounded-xl border border-slate-200 bg-slate-50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-base outline-none"
-              />
-              <button
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-primary transition-colors"
-              >
-                <span className="material-symbols-outlined">
-                  {showPassword ? "visibility_off" : "visibility"}
-                </span>
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-10 space-y-4">
-          <button
-            onClick={handleRegister}
-            disabled={isLoading}
-            className="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-xl transition-all shadow-lg shadow-primary/20 active:scale-[0.98] disabled:opacity-50"
-          >
-            {isLoading ? "Yuklanmoqda..." : "Davom etish"}
-          </button>
-
-          <div className="flex items-center justify-center gap-2 pt-2">
-            <span className="text-slate-500">Profilingiz bormi?</span>
-            <button
-              onClick={() => navigate("/login")}
-              className="text-primary font-bold hover:underline py-2 px-4"
-            >
-              Kirish
-            </button>
-          </div>
-        </div>
+        <RegisterForm />
       </div>
 
       <div className="mt-auto p-6 text-center">

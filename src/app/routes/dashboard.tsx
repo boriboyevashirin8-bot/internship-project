@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../features/auth/hooks/useAuth";
+
 const DashboardPage = () => {
   const { user, logoutUser } = useAuth();
   const navigate = useNavigate();
+
   const handleLogout = () => {
     logoutUser();
     navigate("/login");
@@ -24,14 +26,21 @@ const DashboardPage = () => {
             <p className="text-sm text-slate-500">Xush kelibsiz AgroSmart-ga</p>
           </div>
         </div>
-        <button
-          onClick={handleLogout}
-          className="flex items-center justify-center size-10 rounded-full bg-white shadow-sm"
-        >
-          <span className="material-symbols-outlined text-slate-600">
-            notifications
-          </span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button className="flex items-center justify-center size-10 rounded-full bg-white shadow-sm">
+            <span className="material-symbols-outlined text-slate-600">
+              notifications
+            </span>
+          </button>
+          <button
+            onClick={handleLogout}
+            className="flex items-center justify-center size-10 rounded-full bg-white shadow-sm"
+          >
+            <span className="material-symbols-outlined text-slate-600">
+              logout
+            </span>
+          </button>
+        </div>
       </header>
 
       <section className="px-4 py-2">

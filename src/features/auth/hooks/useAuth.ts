@@ -5,36 +5,52 @@ import {
   loginSuccess,
   loginFailure,
   logout,
-  registerSuccess,
+  registrationStarted,
+  registrationCompleted,
   STATIC_USERS,
 } from "../slices/authSlice";
+import { findLocalUser, saveLocalUser } from "../utils/localUsers";
 
 export const useAuth = () => {
   const dispatch = useAppDispatch();
-  const { user, isAuthenticated, isLoading, error } = useAppSelector(
-    (state) => state.auth,
-  );
+  const { user, isAuthenticated, isRegistering, isLoading, error } =
+    useAppSelector((state) => state.auth);
 
   const login = (phone: string, password: string) => {
     dispatch(loginStart());
 
     setTimeout(() => {
-      const found = STATIC_USERS.find(
+      const staticUser = STATIC_USERS.find(
         (u) => u.phone === phone && u.password === password,
       );
 
-      if (found) {
+      if (staticUser) {
         dispatch(
           loginSuccess({
-            id: found.id,
-            name: found.name,
-            phone: found.phone,
-            token: found.token,
+            id: staticUser.id,
+            name: staticUser.name,
+            phone: staticUser.phone,
+            token: staticUser.token,
           }),
         );
-      } else {
-        dispatch(loginFailure("Telefon yoki parol noto'g'ri"));
+        return;
       }
+
+      const localUser = findLocalUser(phone, password);
+
+      if (localUser) {
+        dispatch(
+          loginSuccess({
+            id: localUser.id,
+            name: localUser.name,
+            phone: localUser.phone,
+            token: localUser.token,
+          }),
+        );
+        return;
+      }
+
+      dispatch(loginFailure("Telefon yoki parol noto'g'ri"));
     }, 1000);
   };
 
@@ -46,10 +62,25 @@ export const useAuth = () => {
         id: Date.now().toString(),
         name,
         phone,
-        token: "new-user-token-" + Date.now(),
+        token: "local-token-" + Date.now(),
+        password,
       };
-      dispatch(registerSuccess(newUser));
+
+      saveLocalUser(newUser);
+
+      dispatch(
+        registrationStarted({
+          id: newUser.id,
+          name: newUser.name,
+          phone: newUser.phone,
+          token: newUser.token,
+        }),
+      );
     }, 1000);
+  };
+
+  const completeRegistration = () => {
+    dispatch(registrationCompleted());
   };
 
   const logoutUser = () => {
@@ -59,10 +90,12 @@ export const useAuth = () => {
   return {
     user,
     isAuthenticated,
+    isRegistering,
     isLoading,
     error,
     login,
     register,
+    completeRegistration,
     logoutUser,
   };
 };

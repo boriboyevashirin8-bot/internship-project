@@ -56,7 +56,7 @@ const OnboardingPage = () => {
     }, 3000);
 
     return () => clearInterval(timer);
-  }, [autoPlay]);
+  }, [autoPlay, navigate]);
 
   return (
     <div className="relative flex h-screen w-full flex-col bg-background-light overflow-hidden font-display">

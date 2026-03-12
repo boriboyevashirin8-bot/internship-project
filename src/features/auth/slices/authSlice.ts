@@ -21,6 +21,7 @@ export const STATIC_USERS = [
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
+  isRegistering: false,
   isLoading: false,
   error: null,
 };
@@ -36,6 +37,7 @@ const authSlice = createSlice({
     loginSuccess(state, action: PayloadAction<User>) {
       state.user = action.payload;
       state.isAuthenticated = true;
+      state.isRegistering = false;
       state.isLoading = false;
       state.error = null;
     },
@@ -46,12 +48,19 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       state.isAuthenticated = false;
+      state.isRegistering = false;
       state.error = null;
     },
-    registerSuccess(state, action: PayloadAction<User>) {
+    registrationStarted(state, action: PayloadAction<User>) {
       state.user = action.payload;
-      state.isAuthenticated = true;
+      state.isRegistering = true;
+      state.isAuthenticated = false;
       state.isLoading = false;
+      state.error = null;
+    },
+    registrationCompleted(state) {
+      state.isAuthenticated = true;
+      state.isRegistering = false;
     },
   },
 });
@@ -61,7 +70,8 @@ export const {
   loginSuccess,
   loginFailure,
   logout,
-  registerSuccess,
+  registrationStarted,
+  registrationCompleted,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "../../hooks/useAppSelector";
+
 const SplashScreen = () => {
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState<"green" | "white">("green");
   const navigate = useNavigate();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
   useEffect(() => {
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          navigate("/onboarding");
+          navigate(isAuthenticated ? "/dashboard" : "/onboarding");
           return 100;
         }
         if (prev >= 40) {
@@ -20,7 +23,7 @@ const SplashScreen = () => {
     }, 50);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [navigate]);
 
   return (
     <div className="relative min-h-screen overflow-hidden">

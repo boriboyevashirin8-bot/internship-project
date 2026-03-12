@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../features/auth/hooks/useAuth";
 
 const CROPS = ["Paxta", "Bug'doy", "Uzum", "Meva", "Sabzavot"];
 const REGIONS = [
@@ -24,6 +25,7 @@ const OtpPage = () => {
   const [selectedCrops, setSelectedCrops] = useState<string[]>([]);
   const [area, setArea] = useState("");
   const navigate = useNavigate();
+  const { completeRegistration } = useAuth();
 
   const toggleCrop = (crop: string) => {
     if (selectedCrops.includes(crop)) {
@@ -33,7 +35,11 @@ const OtpPage = () => {
     }
   };
 
+  const isValid = region && selectedCrops.length > 0 && Number(area) > 0;
+
   const handleSubmit = () => {
+    if (!isValid) return;
+    completeRegistration();
     navigate("/dashboard");
   };
 
@@ -196,7 +202,8 @@ const OtpPage = () => {
         <div className="pt-8 pb-10">
           <button
             onClick={handleSubmit}
-            className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2"
+            disabled={!isValid}
+            className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 transition-all flex items-center justify-center gap-2 disabled:opacity-50"
           >
             Davom etish
             <span className="material-symbols-outlined">arrow_forward</span>

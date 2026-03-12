@@ -1,17 +1,28 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
 import { BrowserRouter } from "react-router-dom";
-import { store } from "./store";
+import { store, persistor } from "./store";
 import "./index.css";
 import App from "./App";
+import Spinner from "./components/atoms/Spinner";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <Provider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
+      <PersistGate
+        loading={
+          <div className="min-h-screen bg-background-light flex items-center justify-center">
+            <Spinner size="lg" color="primary" />
+          </div>
+        }
+        persistor={persistor}
+      >
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </PersistGate>
     </Provider>
   </StrictMode>,
 );
