@@ -4,8 +4,10 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   return (
-    <div className="min-h-screen bg-background-light flex items-center justify-center font-display">
-      <div className="w-full max-w-sm mx-auto px-4">{children}</div>
+    <div className="relative flex min-h-screen flex-col overflow-x-hidden font-display bg-background-light">
+      <div className="fixed -bottom-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="fixed -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      {children}
     </div>
   );
 };

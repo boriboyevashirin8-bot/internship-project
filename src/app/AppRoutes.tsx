@@ -9,25 +9,61 @@ import DashboardPage from "./routes/dashboard";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  return <>{children}</>;
+};
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
+const PublicRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
+  return <>{children}</>;
+};
 
+const OnboardingRoute = ({ children }: { children: React.ReactNode }) => {
+  const { isRegistering, isAuthenticated } = useAppSelector(
+    (state) => state.auth,
+  );
+  if (isAuthenticated) return <Navigate to="/dashboard" replace />;
+  if (!isRegistering) return <Navigate to="/register" replace />;
   return <>{children}</>;
 };
 
 const AppRoutes = () => {
   return (
     <Routes>
-      {/* Public routes */}
       <Route path="/" element={<SplashScreen />} />
-      <Route path="/onboarding" element={<OnboardingPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
-      <Route path="/register/otp" element={<OtpPage />} />
-
-      {/* Protected route */}
+      <Route
+        path="/onboarding"
+        element={
+          <PublicRoute>
+            <OnboardingPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <RegisterPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register/otp"
+        element={
+          <OnboardingRoute>
+            <OtpPage />
+          </OnboardingRoute>
+        }
+      />
       <Route
         path="/dashboard"
         element={
@@ -36,8 +72,6 @@ const AppRoutes = () => {
           </ProtectedRoute>
         }
       />
-
-      {/* Noto'g'ri URL */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

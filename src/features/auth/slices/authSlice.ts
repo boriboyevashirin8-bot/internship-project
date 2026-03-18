@@ -1,26 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthState, User } from "../types";
 
-export const STATIC_USERS = [
-  {
-    id: "1",
-    name: "Nurbek Yo'ldashev",
-    phone: "+998901234567",
-    password: "12345678",
-    token: "static-token-1",
-  },
-  {
-    id: "2",
-    name: "Malika Yusupova",
-    phone: "+998907654321",
-    password: "87654321",
-    token: "static-token-2",
-  },
-];
-
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
+  isRegistering: false,
   isLoading: false,
   error: null,
 };
@@ -36,6 +20,7 @@ const authSlice = createSlice({
     loginSuccess(state, action: PayloadAction<User>) {
       state.user = action.payload;
       state.isAuthenticated = true;
+      state.isRegistering = false;
       state.isLoading = false;
       state.error = null;
     },
@@ -46,12 +31,19 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       state.isAuthenticated = false;
+      state.isRegistering = false;
       state.error = null;
     },
-    registerSuccess(state, action: PayloadAction<User>) {
+    registrationStarted(state, action: PayloadAction<User>) {
       state.user = action.payload;
-      state.isAuthenticated = true;
+      state.isRegistering = true;
+      state.isAuthenticated = false;
       state.isLoading = false;
+      state.error = null;
+    },
+    registrationCompleted(state) {
+      state.isAuthenticated = true;
+      state.isRegistering = false;
     },
   },
 });
@@ -61,7 +53,8 @@ export const {
   loginSuccess,
   loginFailure,
   logout,
-  registerSuccess,
+  registrationStarted,
+  registrationCompleted,
 } = authSlice.actions;
 
 export default authSlice.reducer;

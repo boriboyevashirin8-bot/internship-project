@@ -12,7 +12,6 @@ const DashboardPage = () => {
 
   return (
     <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden max-w-md mx-auto bg-background-light font-display">
-      {/* Header */}
       <header className="flex items-center justify-between p-4 pt-6 bg-background-light">
         <div className="flex items-center gap-3">
           <div className="size-12 rounded-full border-2 border-primary/20 p-0.5 overflow-hidden bg-primary/10 flex items-center justify-center">
@@ -27,17 +26,23 @@ const DashboardPage = () => {
             <p className="text-sm text-slate-500">Xush kelibsiz AgroSmart-ga</p>
           </div>
         </div>
-        <button
-          onClick={handleLogout}
-          className="flex items-center justify-center size-10 rounded-full bg-white shadow-sm"
-        >
-          <span className="material-symbols-outlined text-slate-600">
-            notifications
-          </span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button className="flex items-center justify-center size-10 rounded-full bg-white shadow-sm">
+            <span className="material-symbols-outlined text-slate-600">
+              notifications
+            </span>
+          </button>
+          <button
+            onClick={handleLogout}
+            className="flex items-center justify-center size-10 rounded-full bg-white shadow-sm"
+          >
+            <span className="material-symbols-outlined text-slate-600">
+              logout
+            </span>
+          </button>
+        </div>
       </header>
 
-      {/* Ob-havo */}
       <section className="px-4 py-2">
         <div className="relative overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 p-4 border border-primary/10 flex items-center justify-between shadow-sm">
           <div className="flex flex-col gap-1 z-10">
@@ -59,11 +64,9 @@ const DashboardPage = () => {
         </div>
       </section>
 
-      {/* Statistika */}
       <section className="px-4 py-4">
         <h2 className="text-lg font-bold mb-3">Asosiy ko'rsatkichlar</h2>
         <div className="grid grid-cols-2 gap-4">
-          {/* Farm Health */}
           <div className="col-span-2 flex items-center justify-between p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
             <div className="flex items-center gap-3">
               <div className="size-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
@@ -89,7 +92,6 @@ const DashboardPage = () => {
             </div>
           </div>
 
-          {/* Tuproq namligi */}
           <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
             <div className="size-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 mb-3">
               <span className="material-symbols-outlined">water_drop</span>
@@ -98,7 +100,6 @@ const DashboardPage = () => {
             <p className="text-xl font-bold">42%</p>
           </div>
 
-          {/* Ogohlantirishlar */}
           <div className="p-4 rounded-xl border border-slate-200 bg-white shadow-sm">
             <div className="size-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 mb-3">
               <span className="material-symbols-outlined">warning</span>
@@ -111,7 +112,6 @@ const DashboardPage = () => {
         </div>
       </section>
 
-      {/* Tezkor amallar */}
       <section className="px-4 py-4">
         <h2 className="text-lg font-bold mb-3">Tezkor amallar</h2>
         <div className="grid grid-cols-3 gap-3">
@@ -144,7 +144,6 @@ const DashboardPage = () => {
         </div>
       </section>
 
-      {/* Xarita preview */}
       <section className="px-4 py-4 mb-24">
         <div className="rounded-xl overflow-hidden border border-slate-200 h-32 relative">
           <img
@@ -160,7 +159,6 @@ const DashboardPage = () => {
         </div>
       </section>
 
-      {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white/80 backdrop-blur-lg border-t border-slate-200 pb-6 pt-2 px-6">
         <div className="flex justify-between items-center">
           <button className="flex flex-col items-center gap-1 text-primary">
