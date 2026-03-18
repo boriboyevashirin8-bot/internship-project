@@ -1,3 +1,5 @@
+import Spinner from "./Spinner";
+
 interface ButtonProps {
   children: React.ReactNode;
   onClick?: () => void;
@@ -5,6 +7,7 @@ interface ButtonProps {
   variant?: "primary" | "outline";
   fullWidth?: boolean;
   disabled?: boolean;
+  isLoading?: boolean;
 }
 
 const Button = ({
@@ -14,24 +17,26 @@ const Button = ({
   variant = "primary",
   fullWidth = false,
   disabled = false,
+  isLoading = false,
 }: ButtonProps) => {
   return (
     <button
       type={type}
       onClick={onClick}
-      disabled={disabled}
+      disabled={disabled || isLoading}
       className={`
-        px-6 py-4 rounded-full font-semibold text-base transition-all duration-200
+        h-14 px-6 rounded-xl font-bold text-lg transition-all duration-200
+        flex items-center justify-center gap-2 active:scale-[0.98]
         ${fullWidth ? "w-full" : ""}
         ${
           variant === "primary"
-            ? "bg-primary text-white hover:bg-primary/90 active:scale-95"
-            : "bg-transparent border-2 border-primary text-primary hover:bg-primary/10"
+            ? "bg-primary text-white hover:bg-primary/90 shadow-lg shadow-primary/20"
+            : "bg-primary/10 text-primary hover:bg-primary/20 border border-primary/20"
         }
-        ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
+        ${disabled || isLoading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
       `}
     >
-      {children}
+      {isLoading ? <Spinner /> : children}
     </button>
   );
 };

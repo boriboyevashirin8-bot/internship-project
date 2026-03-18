@@ -1,18 +1,25 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import Spinner from "../../../components/atoms/Spinner";
+import Button from "../../../components/atoms/Button";
+import { formatPhone, normalizePhone } from "../../../utils/phoneFormatter";
 
 const LoginForm = () => {
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState("+998 ");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { login, isLoading, error, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(formatPhone(e.target.value));
+  };
+
+  const isPhoneValid = phone.replace(/\D/g, "").length === 12;
+
   const handleLogin = () => {
-    if (!phone || !password) return;
-    login(phone, password);
+    if (!isPhoneValid || !password) return;
+    login(normalizePhone(phone), password);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -45,9 +52,9 @@ const LoginForm = () => {
             <input
               type="tel"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={handlePhoneChange}
               onKeyDown={handleKeyDown}
-              placeholder="+998 -- --- -- --"
+              placeholder="+998 XX XXX XX XX"
               className="w-full rounded-xl text-slate-900 focus:ring-2 focus:ring-primary border border-slate-300 bg-white h-14 pl-12 pr-4 text-base font-medium outline-none transition-all"
             />
           </div>
@@ -88,13 +95,14 @@ const LoginForm = () => {
         </div>
 
         <div className="pt-4 space-y-4">
-          <button
+          <Button
             onClick={handleLogin}
-            disabled={isLoading || !phone || !password}
-            className="w-full bg-primary hover:bg-primary/90 text-white text-lg font-bold h-14 rounded-xl transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 disabled:opacity-50"
+            disabled={!isPhoneValid || !password}
+            isLoading={isLoading}
+            fullWidth
           >
-            {isLoading ? <Spinner /> : "Kirish"}
-          </button>
+            Kirish
+          </Button>
 
           <div className="flex items-center gap-4 py-2">
             <div className="h-px bg-slate-300 flex-1"></div>
@@ -102,12 +110,13 @@ const LoginForm = () => {
             <div className="h-px bg-slate-300 flex-1"></div>
           </div>
 
-          <button
+          <Button
             onClick={() => navigate("/register")}
-            className="w-full bg-primary/10 hover:bg-primary/20 text-primary text-lg font-bold h-14 rounded-xl transition-all border border-primary/20 flex items-center justify-center"
+            variant="outline"
+            fullWidth
           >
             Ro'yxatdan o'tish
-          </button>
+          </Button>
         </div>
       </div>
     </>

@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-import Spinner from "../../../components/atoms/Spinner";
+import Button from "../../../components/atoms/Button";
+import { formatPhone, normalizePhone } from "../../../utils/phoneFormatter";
 
 const RegisterForm = () => {
   const [name, setName] = useState("");
@@ -11,11 +12,15 @@ const RegisterForm = () => {
   const { register, isLoading, error, isRegistering } = useAuth();
   const navigate = useNavigate();
 
-  const isPhoneValid = phone.replace(/\D/g, "").length >= 12;
+  const isPhoneValid = phone.replace(/\D/g, "").length === 12;
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPhone(formatPhone(e.target.value));
+  };
 
   const handleRegister = () => {
     if (!name || !isPhoneValid || password.length < 8) return;
-    register(name, phone, password);
+    register(name, normalizePhone(phone), password);
   };
 
   useEffect(() => {
@@ -62,8 +67,8 @@ const RegisterForm = () => {
             <input
               type="tel"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              placeholder="+998 00 000 00 00"
+              onChange={handlePhoneChange}
+              placeholder="+998 XX XXX XX XX"
               className="w-full h-14 pl-12 pr-4 rounded-xl border border-slate-200 bg-slate-50 focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all text-base outline-none"
             />
           </div>
@@ -98,17 +103,19 @@ const RegisterForm = () => {
       </div>
 
       <div className="mt-10 space-y-4">
-        <button
+        <Button
           onClick={handleRegister}
-          disabled={isLoading || !name || !isPhoneValid || password.length < 8}
-          className="w-full h-14 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-xl transition-all shadow-lg shadow-primary/20 active:scale-[0.98] disabled:opacity-50 flex items-center justify-center gap-2"
+          disabled={!name || !isPhoneValid || password.length < 8}
+          isLoading={isLoading}
+          fullWidth
         >
-          {isLoading ? <Spinner /> : "Davom etish"}
-        </button>
+          Davom etish
+        </Button>
 
         <div className="flex items-center justify-center gap-2 pt-2">
           <span className="text-slate-500">Profilingiz bormi?</span>
           <button
+            type="button"
             onClick={() => navigate("/login")}
             className="text-primary font-bold hover:underline py-2 px-4"
           >

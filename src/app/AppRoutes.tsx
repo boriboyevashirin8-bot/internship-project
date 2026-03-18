@@ -19,9 +19,10 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   return <>{children}</>;
 };
 
-// Faqat ro'yxatdan o'tayotgan foydalanuvchilar uchun
 const OnboardingRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isRegistering, isAuthenticated } = useAppSelector((state) => state.auth);
+  const { isRegistering, isAuthenticated } = useAppSelector(
+    (state) => state.auth,
+  );
   if (isAuthenticated) return <Navigate to="/dashboard" replace />;
   if (!isRegistering) return <Navigate to="/register" replace />;
   return <>{children}</>;
@@ -31,11 +32,46 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={<SplashScreen />} />
-      <Route path="/onboarding" element={<PublicRoute><OnboardingPage /></PublicRoute>} />
-      <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
-      <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
-      <Route path="/register/otp" element={<OnboardingRoute><OtpPage /></OnboardingRoute>} />
-      <Route path="/dashboard" element={<ProtectedRoute><DashboardPage /></ProtectedRoute>} />
+      <Route
+        path="/onboarding"
+        element={
+          <PublicRoute>
+            <OnboardingPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/login"
+        element={
+          <PublicRoute>
+            <LoginPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register"
+        element={
+          <PublicRoute>
+            <RegisterPage />
+          </PublicRoute>
+        }
+      />
+      <Route
+        path="/register/otp"
+        element={
+          <OnboardingRoute>
+            <OtpPage />
+          </OnboardingRoute>
+        }
+      />
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -53,7 +53,7 @@ const OnboardingPage = () => {
         }
         return prev + 1;
       });
-    }, 3000);
+    }, 5000);
 
     return () => clearInterval(timer);
   }, [autoPlay, navigate]);

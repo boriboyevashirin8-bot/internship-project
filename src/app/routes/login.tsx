@@ -1,16 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../../features/auth/components/LoginForm";
+import AuthLayout from "../../components/layouts/AuthLayout";
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative flex h-full min-h-screen w-full flex-col overflow-x-hidden font-display bg-background-light">
-      <div className="fixed -bottom-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-      <div className="fixed -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
-
+    <AuthLayout>
       <div className="flex items-center p-4 pb-2 justify-between">
         <button
+          type="button"
           onClick={() => navigate(-1)}
           className="text-slate-900 flex size-12 shrink-0 items-center justify-start"
         >
@@ -46,7 +45,7 @@ const LoginPage = () => {
           © 2024 AgroSmart Uzbekistan. Barcha huquqlar himoyalangan.
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 

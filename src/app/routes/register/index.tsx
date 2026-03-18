@@ -1,13 +1,15 @@
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "../../../features/auth/components/RegisterForm";
+import AuthLayout from "../../../components/layouts/AuthLayout";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="relative flex min-h-screen flex-col bg-white font-display">
+    <AuthLayout>
       <div className="flex items-center p-4 pb-2 justify-between">
         <button
+          type="button"
           onClick={() => navigate(-1)}
           className="flex size-12 shrink-0 items-center justify-center hover:bg-primary/10 rounded-full transition-colors"
         >
@@ -23,10 +25,7 @@ const RegisterPage = () => {
       <div className="px-6 pt-8 pb-4">
         <div className="mb-6">
           <div className="h-12 w-12 bg-primary rounded-xl flex items-center justify-center mb-6">
-            <span
-              className="material-symbols-outlined text-white"
-              style={{ fontSize: "28px" }}
-            >
+            <span className="material-symbols-outlined text-white text-[28px]">
               eco
             </span>
           </div>
@@ -44,17 +43,17 @@ const RegisterPage = () => {
       <div className="mt-auto p-6 text-center">
         <p className="text-xs text-slate-400 leading-relaxed">
           Ro'yxatdan o'tish orqali siz bizning{" "}
-          <button className="underline text-slate-500">
+          <button type="button" className="underline text-slate-500">
             Foydalanish shartlari
           </button>{" "}
           va{" "}
-          <button className="underline text-slate-500">
+          <button type="button" className="underline text-slate-500">
             Maxfiylik siyosati
           </button>
           ga rozilik berasiz.
         </p>
       </div>
-    </div>
+    </AuthLayout>
   );
 };
 

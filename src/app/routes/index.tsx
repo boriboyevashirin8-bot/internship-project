@@ -1,29 +1,66 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { gql } from "@apollo/client";
+import { useQuery } from "@apollo/client/react";
 import { useAppSelector } from "../../hooks/useAppSelector";
+import { logger } from "../../utils/logger";
+
+const HELLO_QUERY = gql`
+  query {
+    hello
+  }
+`;
 
 const SplashScreen = () => {
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState<"green" | "white">("green");
   const navigate = useNavigate();
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const backendReady = useRef(false);
+  const navigated = useRef(false);
+
+  const { loading, data, error } = useQuery(HELLO_QUERY);
+
   useEffect(() => {
+    if (!loading && data) {
+      backendReady.current = true;
+      logger.info("SplashScreen", "Backend tayyor");
+    }
+    if (!loading && error) {
+      backendReady.current = true;
+      logger.warn("SplashScreen", "Backend javob bermadi, davom etilmoqda", {
+        message: error.message,
+      });
+    }
+  }, [loading, data, error]);
+
+  useEffect(() => {
+    logger.info("SplashScreen", "Splash boshlandi");
     const interval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          navigate(isAuthenticated ? "/dashboard" : "/onboarding");
+          if (!navigated.current) {
+            navigated.current = true;
+            navigate(isAuthenticated ? "/dashboard" : "/onboarding");
+          }
           return 100;
         }
-        if (prev >= 40) {
-          setPhase("white");
-        }
-        return prev + 1;
+        if (prev >= 40) setPhase("white");
+
+        // 0-60%: tez ishlaydi (30ms)
+        if (prev < 60) return prev + 1;
+
+        // 60-95%: backend tayyor bo'lguncha sekin kutadi
+        if (!backendReady.current) return prev;
+
+        // Backend tayyor: 95-100% tez tugaydi
+        return prev + 2;
       });
-    }, 50);
+    }, 30);
 
     return () => clearInterval(interval);
-  }, [navigate]);
+  }, [navigate, isAuthenticated]);
 
   return (
     <div className="relative min-h-screen overflow-hidden">

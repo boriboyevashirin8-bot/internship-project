@@ -1,23 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AuthState, User } from "../types";
 
-export const STATIC_USERS = [
-  {
-    id: "1",
-    name: "Nurbek Yo'ldashev",
-    phone: "+998901234567",
-    password: "12345678",
-    token: "static-token-1",
-  },
-  {
-    id: "2",
-    name: "Malika Yusupova",
-    phone: "+998907654321",
-    password: "87654321",
-    token: "static-token-2",
-  },
-];
-
 const initialState: AuthState = {
   user: null,
   isAuthenticated: false,
